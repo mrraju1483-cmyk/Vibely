@@ -1,0 +1,42 @@
+# Render Blueprint: backend API + AI service. The frontend goes on Vercel (see DEPLOYMENT.md).
+# Values marked "sync: false" are secrets: Render asks you for them in the dashboard. Nothing secret lives in this file.
+services:
+  - type: web
+    name: vibely-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - { key: NODE_ENV, value: production }
+      - { key: NODE_VERSION, value: 20 }
+      - { key: MONGODB_URI, sync: false }          # MongoDB Atlas connection string
+      - { key: JWT_SECRET, generateValue: true }   # 32+ random characters
+      - { key: JWT_EXPIRES_IN, value: 1d }
+      - { key: CLIENT_URL, sync: false }           # your Vercel URL, e.g. https://vibely.vercel.app (no trailing slash)
+      - { key: PUBLIC_URL, sync: false }           # this service's public URL
+      - { key: MEDIA_PROVIDER, value: cloudinary }
+      - { key: CLOUDINARY_CLOUD_NAME, sync: false }
+      - { key: CLOUDINARY_API_KEY, sync: false }
+      - { key: CLOUDINARY_API_SECRET, sync: false }
+      - { key: OTP_PROVIDER, value: dev }          # no real provider is built yet: see DEPLOYMENT.md before real users sign up
+      - { key: STUN_URLS, value: "stun:stun.l.google.com:19302" }
+      - { key: TURN_URL, sync: false }
+      - { key: TURN_SECRET, sync: false }
+      - { key: AI_SERVICE_URL, sync: false }       # URL of vibely-ai below
+      - { key: AI_SERVICE_KEY, sync: false }       # must equal AI_SERVICE_KEY of vibely-ai
+  - type: web
+    name: vibely-ai
+    runtime: python
+    rootDir: ai-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - { key: PYTHON_VERSION, value: 3.12.3 }
+      - { key: AI_ENV, value: production }
+      - { key: AI_SERVICE_KEY, sync: false }
+      - { key: AI_PROVIDER, value: anthropic }
+      - { key: AI_API_KEY, sync: false }
+      - { key: AI_MODEL, value: claude-haiku-5-5 }

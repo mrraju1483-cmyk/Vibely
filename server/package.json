@@ -1,0 +1,46 @@
+{
+  "name": "vibely-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test:smoke": "node scripts/smoke-test.js",
+    "test:users": "node scripts/smoke-test-users.js",
+    "test:posts": "node scripts/smoke-test-posts.js",
+    "test:explore": "node scripts/smoke-test-explore.js",
+    "test:stories": "node scripts/smoke-test-stories.js",
+    "test:reels": "node scripts/smoke-test-reels.js",
+    "backfill:discovery": "node scripts/backfill-discovery.js",
+    "test:chat": "node scripts/smoke-test-chat.js",
+    "test:phase9": "node scripts/smoke-test-phase9.js",
+    "test:admin": "node scripts/smoke-test-admin.js",
+    "admin:grant": "node scripts/set-admin.js grant",
+    "admin:revoke": "node scripts/set-admin.js revoke",
+    "audit:secrets": "node scripts/audit-secrets.js",
+    "test:ai": "node scripts/smoke-test-ai.js",
+    "audit:project": "node scripts/audit-project.js",
+    "test:journey": "node scripts/smoke-test-journey.js",
+    "test:all": "npm run test:smoke && npm run test:users && npm run test:posts && npm run test:explore && npm run test:stories && npm run test:reels && npm run test:chat && npm run test:phase9 && npm run test:admin && npm run test:ai && npm run test:journey"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.2",
+    "multer": "^2.0.0",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
