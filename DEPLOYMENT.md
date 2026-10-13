@@ -19,8 +19,9 @@ Create a free account and copy cloud name, API key and API secret into the backe
 
 ## 3. Backend API (Render, using `render.yaml`)
 1. Push the repo to GitHub. In Render: **New > Blueprint** and pick the repo. It creates `vibely-api` and `vibely-ai`.
-2. Fill the secret variables when asked (see the table below). `JWT_SECRET` is generated for you.
-3. Wait for the deploy. Open `https://<your-api>/api/health`: it should answer `{"success":true,"status":"ok"}`.
+2. The Blueprint uses Render's free web-service plan to avoid paid instances. Free services can sleep when idle and have resource limits; the first request after sleeping may take about 30 seconds. Change the `plan` in `render.yaml` only if you deliberately want a paid instance.
+3. Fill the secret variables when asked (see the table below). `JWT_SECRET` is generated for you.
+4. Wait for the deploy. Open `https://<your-api>/api/health`: it should answer `{"success":true,"status":"ok"}`.
 
 **Railway instead:** create two services from the same repo. API: root directory `server`, start command `npm start`. AI: root directory `ai-service`, start command `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Add the same variables.
 

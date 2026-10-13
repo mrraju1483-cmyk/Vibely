@@ -4,6 +4,7 @@ services:
   - type: web
     name: vibely-api
     runtime: node
+    plan: free
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
@@ -29,6 +30,7 @@ services:
   - type: web
     name: vibely-ai
     runtime: python
+    plan: free
     rootDir: ai-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
